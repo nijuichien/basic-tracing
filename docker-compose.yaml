@@ -1,0 +1,29 @@
+services:
+  python-example:
+    container_name: python-example
+    build:
+      context: ./python-example
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    environment:
+      - OTEL_SERVICE_NAME=python-example
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger-all-in-one:4317
+    networks:
+      - backend
+
+  jaeger-all-in-one:
+    container_name: jaeger-all-in-one
+    image: docker.io/jaegertracing/jaeger:2.5.0
+    ports:
+      - 16686:16686 # Jaeger UI
+      # - 4317:4317
+      # - 4318:4318
+      # - 5778:5778
+      # - 9411:9411
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: tracing
