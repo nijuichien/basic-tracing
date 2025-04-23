@@ -19,13 +19,8 @@ from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 import os
 
 # 環境變量設置 (可選)
-OTEL_SERVICE_NAME = os.environ["OTEL_SERVICE_NAME"] 
-if not OTEL_SERVICE_NAME:
-    OTEL_SERVICE_NAME = "simple-fastapi-demo"  # 服務名稱
-# Jaeger OTLP gRPC 端口 (可選，根據您的環境進行設置)
-OTEL_EXPORTER_OTLP_ENDPOINT = os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"]  # Jaeger OTLP gRPC 端口
-if not OTEL_EXPORTER_OTLP_ENDPOINT:
-    OTEL_EXPORTER_OTLP_ENDPOINT = "http://localhost:4317"  # 默認端口
+OTEL_SERVICE_NAME = os.environ.get("OTEL_SERVICE_NAME", "simple-fastapi-demo")  # 服務名稱
+OTEL_EXPORTER_OTLP_ENDPOINT = os.environ.get("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317")  # Jaeger OTLP gRPC 端口
 
 # 自定義日誌格式器
 class CustomFormatter(logging.Formatter):
